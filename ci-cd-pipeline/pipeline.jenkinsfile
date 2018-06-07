@@ -1,36 +1,31 @@
-node('master'){
+node{
     stage ('CI'){
-          def projectPath="MindConnectSW-3/Software_Packages"
-          def projectWorkspace=env.WORKSPACE+"/"+projectPath
-
           try{
               def mvnHome
               stage('Checkout') {
-                  git 'git@github.com:onedaywillcome1/fetchr-sample-springboot.git'
+                checkout([$class: 'GitSCM',
+                    branches: [[name: "origin/master"]],
+                    doGenerateSubmoduleConfigurations: false,
+                    extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'fetchr-sample-springboot']],
+                    submoduleCfg: [],
+                    userRemoteConfigs: [[
+                        url: 'https://github.com/onedaywillcome1/fetchr-sample-springboot.git']]])
                   mvnHome = tool 'M2'
               }
               stage('Build'){
                   try{
-                     sh "gradle clean build -b $projectPath/build.gradle -Pjenkins_user -Pjenkins_encrypted_password --parallel"
-                     echo "Assemble passed"
+                      sh "'${mvnHome}/bin/mvn' clean package -f fetchr-sample-springboot/springboot-helloworld/pom.xml"
                   }catch(e){
-                      echo "Assemble failed in jenkins. Cause: " + e.message
+                      echo "Build failed in jenkins. Cause: " + e.message
                       throw e
                   }
               }
               stage('Tests'){
-                  try {
-                     sh "gradle test -b $projectPath/build.gradle -Pjenkins_user -Pjenkins_encrypted_password --parallel"
-                     echo "Tests passed"
-                  } catch (e) {
-                      echo "Tests failed in jenkins. Cause: " + e.message
-                      throw e
-                  }
+                   echo "Tests have been executed"
               }
               stage('Deploy'){
                   try {
-                     sh "gradle test -b $projectPath/build.gradle -Pjenkins_user -Pjenkins_encrypted_password --parallel"
-                     echo "Tests passed"
+                      sh "./fetchr-sample-springboot/springboot-helloworld/deploy/run.sh deploy"
                   } catch (e) {
                       echo "Tests failed in jenkins. Cause: " + e.message
                       throw e
@@ -38,19 +33,15 @@ node('master'){
               }
               stage('Publish'){
                   try {
-                     sh "gradle test -b $projectPath/build.gradle -Pjenkins_user -Pjenkins_encrypted_password --parallel"
-                     echo "Tests passed"
+                    sh "./fetchr-sample-springboot/springboot-helloworld/deploy/run.sh publish"
                   } catch (e) {
                       echo "Tests failed in jenkins. Cause: " + e.message
                       throw e
                   }
               }
-
-              }catch(e){
+          }catch(e){
                   echo "Job failed"
-                  notifyBuild(user_id,"FAILED")
                   throw e
-             }
-         }
-
+          }
+    }
 }
