@@ -26,3 +26,6 @@ After Jenkins installed automatically with Ansible & Vagrant, there are some man
 
 - General Pipeline view is as below:
 ![Alt text](docs/pipeline3.png?raw=true "Pipeline3")
+
+- App is running in appserver(dev) as follow:
+![Alt text](docs/app.png?raw=true "Pipeline3")
