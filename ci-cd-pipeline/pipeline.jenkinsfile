@@ -23,9 +23,9 @@ node{
               stage('Tests'){
                    echo "Tests have been executed"
               }
-              stage('Deploy'){
+              stage('Build-Image'){
                   try {
-                      sh "./fetchr-sample-springboot/springboot-helloworld/deploy/run.sh deploy"
+                      sh "./fetchr-sample-springboot/springboot-helloworld/deploy/run.sh build_image"
                   } catch (e) {
                       echo "Tests failed in jenkins. Cause: " + e.message
                       throw e
@@ -39,6 +39,15 @@ node{
                       throw e
                   }
               }
+              stage('Deploy'){
+                  try {
+                    sh "./fetchr-sample-springboot/springboot-helloworld/deploy/run.sh deploy"
+                  } catch (e) {
+                      echo "Tests failed in jenkins. Cause: " + e.message
+                      throw e
+                  }
+              }
+
           }catch(e){
                   echo "Job failed"
                   throw e
