@@ -12,16 +12,16 @@ node{
                         url: 'https://github.com/onedaywillcome1/fetchr-sample-springboot.git']]])
                   mvnHome = tool 'M2'
               }
-              stage('Build'){
+              stage('Tests'){
+                   echo "Tests have been executed"
+              }
+              stage('Package'){
                   try{
                       sh "'${mvnHome}/bin/mvn' clean package -f fetchr-sample-springboot/springboot-helloworld/pom.xml"
                   }catch(e){
                       echo "Build failed in jenkins. Cause: " + e.message
                       throw e
                   }
-              }
-              stage('Tests'){
-                   echo "Tests have been executed"
               }
               stage('Build-Image'){
                   try {
