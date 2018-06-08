@@ -20,3 +20,9 @@ After Jenkins installed automatically with Ansible & Vagrant, there are some man
 ![Alt text](docs/maven.png?raw=true "M2")
 - Docker USER and Docker PASS is provided as an environment variable when it is needed for publishing.
 ![Alt text](docs/env-vars.png?raw=true "Env-Var")
+- Create Pipeline job and Checkout from SCM with https://github.com/onedaywillcome1/fetchr-ci/blob/master/ci-cd-pipeline/pipeline.jenkinsfile
+![Alt text](docs/pipeline1.png?raw=true "Pipeline1")
+![Alt text](docs/pipeline2.png?raw=true "Pipeline2")
+
+- General Pipeline view is as below:
+![Alt text](docs/pipeline3.png?raw=true "Pipeline3")
