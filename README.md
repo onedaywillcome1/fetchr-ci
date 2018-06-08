@@ -34,7 +34,7 @@ After Jenkins installed automatically with Ansible & Vagrant, there are some man
 ![Alt text](docs/registry.png?raw=true "Registry")
 
 
-## How do you manage Deployment Versions?
+## How do we manage Deployment Versions?
 * In a real-world CI-CD pipelines;
     * When developers pushes code to dev branch, it pushes image with "snapshot" postfix with "versioning" number(1.4.0-snapshot).
     * When developers merges code to master branch from dev branch, it pushes image with "versioning" number(1.4.0).
