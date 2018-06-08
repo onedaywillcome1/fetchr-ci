@@ -32,3 +32,21 @@ After Jenkins installed automatically with Ansible & Vagrant, there are some man
 
 - Image is published to registry(https://hub.docker.com/r/onedaywillcome/fetchr-sample-springboot/)
 ![Alt text](docs/registry.png?raw=true "Registry")
+
+
+## How do you manage Deployment Versions?
+* In a real-world CI-CD pipelines;
+    * When developers pushes code to dev branch, it pushes image with "snapshot" postfix with "versioning" number(1.4.0-snapshot).
+    * When developers merges code to master branch from dev branch, it pushes image with "versioning" number(1.4.0).
+* Semantic versioning number(1.4.0) can be described as below:
+    * Most left number can represent major release(1)
+    * Middle number can represent minor release(4)
+    * Most right number can represent hotfix(0)
+* Semantic versioning can be controlled by setting up versioning server. There is a really good project about that: https://github.com/Volgaa/semantic-versioning-server
+    * After installing versioning server, versions of projects can be kept in server with "post request" after deployment.
+    * curl -X POST -d version_type=major http://versioningserver:8000/project/myProject/incrementVersion
+
+
+## How do we improve Continuous deployment?
+* Instead of using docker-compose or directly docker containers to deploy our apps, container orchestration tools(like Kubernetes, AWS ECS, docker swarm) can be used
+* Kubernetes or etc. tools will provide scalability, zero down time deployment(blue-green) and high-availability.
